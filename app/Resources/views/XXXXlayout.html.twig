@@ -1,0 +1,402 @@
+{% extends "::layout.html.twig" %}
+{% block fos_user_content %}
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		 <title>
+			{% block title %}
+				Les annonces dans le monde
+			{% endblock %}
+		 </title>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			{% block stylesheets %}
+				<link rel="stylesheet" href="{{ asset('bundles/woaannonce/css/main.css') }}" type="text/css" media="all" />
+	  
+				<!-- Begin Ernest TCHOULOM 25-05-2013 BOOTSTRAP SDZ -->
+				<!--<link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+				<link href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" rel="stylesheet">
+				-->
+				
+				<!--<link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">-->
+				<link href="{{ asset('bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+				<!-- End  Ernest TCHOULOM 25-05-2013 BOOTSTRAP SDZ -->
+			{% endblock %}	
+			<!-- On ouvre la fenêtre à la largeur de l'écran -->
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<!-- Intégration du CSS Bootstrap -->
+			<link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+			<link href="{{ asset('bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+			
+			
+			<style>
+				/* Styles utiles à la mise en page */
+				.row {
+				margin-bottom: 0px;
+				}
+				/*footer {
+				height: 50px;
+				}*/
+				.navbar-inner {	
+				-webkit-border-radius: 0;
+				-moz-border-radius: 0;
+				border-radius: 0;
+				/*background-color: black;
+				color: black;*/
+				}
+				/*Begin NavBar*/
+				.navbar-inner {
+				  background-color: #191970; /* background color will be black for all browsers */
+				  background-image: none;
+				  background-repeat: no-repeat;
+				  filter: none;
+				}
+				ul.nav li.dropdown:hover > ul.dropdown-menu{
+					display: block;    
+					margin-top: 0px;
+				}
+				/*End NavBar*/
+				
+				.row {
+					/*margin-top: 0px;
+					margin-bottom: 0px;*/
+				}
+				
+			</style>
+			
+			
+			
+		
+		<!-- Intégration de la libraire jQuery -->
+		   <!-- Begin Ernest TCHOULOM 25-05-2013 BOOTSTRAP SDZ -->
+	
+	    <!--<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="{{ asset('bootstrap/js/jquery.js') }}"></script>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		-->
+		
+		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+		
+	  
+	  
+	<!-- Begin Carousel 26-05-2013-->
+		<script> 
+			$(function (){
+			$('.carousel').carousel({
+			interval: 5000
+			});
+			$("#pause").click(function() {
+			$('.carousel').carousel('pause');
+			$('.label').text('Mode pause').removeClass("labelinfo").
+			addClass("label-warning");
+			});
+			$("#reprise").click(function() {
+			$('.carousel').carousel('cycle');
+			$('.label').text('Mode cycle').removeClass("labelwarning").
+			addClass("label-info");
+			});
+			});
+		</script>
+    <!-- End Carousel 26-05-2013-->
+	
+	<!-- Begin Info bulle 26-05-2013-->
+		<script>
+			$(function (){
+			$('a').tooltip();
+			});
+		</script>
+	<!-- End Info bulle 26-05-2013-->
+	
+	
+	<!-- Begin Fenetre Connexion 14-09-2013-->
+		<script language="javascript">
+			$('.dropdown-toggle').dropdown();
+			$('.dropdown-menu').find('form').click(function (e) {
+				e.stopPropagation();
+			  });
+		</script>
+	<!-- End Fenetre Connexion 14-09-2013-->
+	
+<!-- End Ernest TCHOULOM 25-05-2013 BOOTSTRAP SDZ -->
+					
+	</head>
+
+	{% block body %}
+	<body style="float: center;">
+		<!-- Begin Conteneur principal -->
+			<div class="container" id="cont_ain">
+			
+				<!-- Begin Barre de navigation -->
+				<div class="row" style="margin-bottom:4%;">
+				    <div class="span12" style="">			
+						<div class="navbar navbar-fixed-top" style="">
+							<div class="navbar-inner" style="">
+								<div class="container">
+									<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</a>
+									<a class="brand" href="{{ path('woa_annonce')}}">La Face Des Annonces</a>
+									<div class="nav-collapse">
+										<ul class="nav">
+											<li class="active"><a href="{{ path('woa_annonce')}}"><i class="icon-home icon-white"></i> Accueil</a></li>
+											<li><a href="#">Link</a></li>
+											<li><a href="#">Link</a></li>
+											<li><a href="#">Link</a></li>
+											<li class="dropdown">
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gérer <b class="caret"></b></a>
+												<ul class="dropdown-menu">
+													<li><a href="{{ path('woa_annonce_new') }}">Déposer une annonce</a></li>
+													<li>
+														{% block GererModifAnnonce %}
+														{% endblock %}
+													</li>
+													<li><a href="#">Autre Lien</a></li>
+												</ul>
+											</li>
+											
+											
+											<li class="dropdown" id="menu1">
+												 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Connexion <b class="caret"></b></a>
+												 <div class="dropdown-menu">
+												   <form style="margin: 0px" accept-charset="UTF-8" action="{{ path('fos_user_security_login') }}" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="4L/A2ZMYkhTD3IiNDMTuB/fhPRvyCNGEsaZocUUpw40=" /></div>
+													 <fieldset class='textbox' style="padding:10px">
+													   <input style="margin-top: 8px" type="text" placeholder="Email" />
+													   <input style="margin-top: 8px" type="password" placeholder="Passsword" />
+													   <input id="user_remember_me" style="float: left; margin-right: 10px;" type="checkbox" name="user[remember_me]" value="1" />
+													   <label class="string optional" for="remember_me"> Rester connecté</label>
+													   <a href="{{ path('woa_annonce_inscription') }}">Mot de passe oublié ?</a>
+													   <!--<input class="btn-primary" name="commit" type="submit" value="Se connecter" />-->
+													   <div id = "submcon1" style="background-color: ;">
+															<button type="submit" class="btn btn-primary pullright" style="width: 100%;">Se connecter <i class="icon-white icon-user"></i></button>
+													   </div>
+													 </fieldset>
+												   </form>
+												 </div>
+										   </li>
+											
+											
+										</ul>
+										
+										<form action="{{ path('woa_annonce_searchAll') }}" method="post" class="navbar-search pull-right">
+										  <!--<input type="text" name="annonce_title" class="search-query span2" placeholder="Rechercher" required>
+										  <button type="submit"><img src="{{ asset('bundles/woaannonce/images/search.gif') }}" alt="Rechercher" /></button>
+										  -->
+										  	
+											<div class="input-append">
+												  <!--<input name="annonce_title" class="span2" id="appendedInputButton" type="text" placeholder="Rechercher..." required>
+												  <button type="submit" class="btn" style="margin-right: 10px;">
+													  <i class="icon-search"></i>
+												  </button>-->
+												  
+												  <!--<a href="{{ path('woa_annonce_connexion') }}">
+													<button type="button" class="btn btn-danger pullright" style="margin-right: 7px;">CONNEXION <i class="icon-white icon-user"></i></button>
+												  </a>-->
+												  
+												  <!--<a href="{{ path('woa_annonce_inscription') }}">
+													<button type="button" class="btn btn-danger pullright" style="margin-right: -7px;">S'INSCRIRE <i class="icon-white icon-pencil"></i></button>
+												  </a>-->
+											</div>
+											
+																		  
+										</form>
+										
+										
+										<div>
+										 <!--<a href="{{ path('woa_annonce_index') }}">
+											   <button type="button" class="btn btn-danger pullright" style="margin-right: 7px;">CONNEXION <i class="icon-white icon-user"></i></button>
+										  </a>-->
+										
+										  <a href="{{ path('woa_annonce_inscription') }}">
+												<button type="button" class="btn btn-danger pullright" style="float: right; margin-right: 0px;">S'INSCRIRE <i class="icon-white icon-pencil"></i></button>
+										  </a>
+										</div>
+										
+									</div><!-- /.nav-collapse -->
+								</div><!-- /.container -->
+							</div><!-- /.navbar-inner -->
+						</div><!-- /.navbar -->
+					</div>	<!-- /span12 -->
+				</div>	<!-- /row -->
+				<!-- End Barre de navigation -->
+				
+				<!-- Begin Première ligne de notre grille -->
+				
+				<div class="row" style="margin-bottom:0px;">
+				    <div class="span1" style="background-color: black;"></div>
+					<div class="span10">
+						<div id="myCarousel" class="carousel slide">
+							<!-- Begin Carousel items -->
+								<div class="carousel-inner">
+									<div class="active item">
+										<img src="{{ asset('bundles/woaannonce/images/femme.jpg') }}" alt="La bonne humeur" class="photo_show"/>
+										<!--<div class="carousel-caption">
+											<h4>1er slide</h4>
+											<p>description de l'image</p>
+										</div>
+										-->
+									</div>
+									<div class="item">
+										<img src="{{ asset('bundles/woaannonce/images/voiture.jpg') }}" alt="La voiture" class="photo_show"/>
+										<!--<div class="carousel-caption">
+											<h4>2eme slide</h4>
+											<p>description de l'image</p>
+										</div>
+										-->
+									</div>
+									<div class="item">
+										<img src="{{ asset('bundles/woaannonce/images/avion.jpg') }}" alt="L avion" class="photo_show"/>
+										<!--<div class="carousel-caption">
+											<h4>3eme slide</h4>
+											<p>description de l'image</p>
+										</div>-->
+									</div>
+								</div>
+							<!-- End Carousel items -->
+							<!-- Carousel nav -->
+								<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+								<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+						</div>
+					</div>
+					<div class="span1" style="background-color: black;"></div>
+				</div>
+				<!-- End Première ligne de notre grille -->
+				
+				<!-- Begin RECHERCHE Seconde ligne de notre grille -->
+					<!-- Begin RECHERCHE IE -->
+					
+						<!--[if IE]><!-->
+						
+							<div class="row" style="">
+								<div class="span2" style="background-color: black;"></div>
+								
+								<div class="span8">	
+								
+									<!-- Begin RECHERCHE -->
+							
+									<form action="{{ path('woa_annonce_search') }}" method="post" {{ form_enctype(searchForm) }} class="well form-inline" id="form_search">
+										
+										{{ form_errors(searchForm.annonce_title) }}
+										{{ form_widget(searchForm.annonce_title) }}
+										
+										{{ form_errors(searchForm.category) }}
+										{{ form_widget(searchForm.category) }}
+										
+										{{ form_errors(searchForm.regions_annonce) }}
+										{{ form_widget(searchForm.regions_annonce) }}
+									
+										<!--<button type="submit"><img src="{{ asset('bundles/woaannonce/images/search.gif') }}" alt="Rechercher" /></button>-->
+										<button type="submit" class="btn" style="margin-left: 0px;">
+											<i class="icon-search"></i>
+										</button>
+						
+									</form>
+									
+									<!-- End RECHERCHE -->
+								</div>
+								<div class="span2" style="background-color: black;"></div>
+							</div>
+						
+						<!--<![endif]-->
+				
+					<!-- End RECHERCHE IE -->
+				
+				<!-- End RECHERCHE Seconde ligne de notre grille -->
+				
+				
+			<!-- Begin content-->
+			<div class="row">
+				<div class="span2" style="background-color: black;"></div>
+				<div class="span8" style="margin-right:;">	
+					<div id="content">
+						{% if app.session.hasFlash('notice') %}
+							<div class="flash_notice">
+								{{ app.session.flash('notice') }}
+							</div>
+						{% endif %}
+		 
+						{% if app.session.hasFlash('error') %}
+							<div class="flash_error">
+								{{ app.session.flash('error') }}
+							</div>
+						{% endif %}
+		 
+						<div class="content">
+							{% block content %}
+							{% endblock %}
+						</div>
+					</div>
+			
+				</div>
+				<div class="span2" style="background-color: black;"></div><!--Probleme-->
+			</div>	
+			<!-- End content-->	
+			</div>
+		<!-- End Conteneur principal -->
+		
+		<hr>
+			<!-- Begin Footer -->
+			<footer class="row-fluid" style="background-color: #191970; margin-bottom: -200000px; height: 140px;">
+				<!--<div style="">-->
+					<div class="row" style="background-color: #191970; margin-bottom: 0 px;">
+						<div class="span2" style="background-color: #191970;"></div>
+						<div class="span8" style="">
+
+							<div class="row">
+								<div class="span12" style="">
+									<p style="color: white; font-size: 120%;">En bref sur la Face Des Annonces</p>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="span6" style="">
+									<div>
+										<span style="color: #778899;">Membres inscrits</span><br/>
+										<span style="color: #E6E6FA;">600 269</span>
+									</div>
+								</div>
+								
+								<div class="span6" style="">
+									<p style="color: #778899; /*font-weight: bold;*/">Partenaires</p>
+									<div>
+										<span style="color: #E6E6FA;">
+										
+											<div id="myCarousel_show" class="carousel slide">
+												<div class="carousel-inner">
+												
+														<div class="active item">
+															<img src="{{ asset('uploads/annonces/partenaire.JPG') }}" alt="Téléphone portable" class="photo_show1" />
+														</div>
+													
+														<div class="item">
+															<img src="{{ asset('uploads/annonces/partenaire.JPG') }}" alt="Voiture" class="photo_show1" />
+														</div>
+													
+														<div class="item">
+															<img src="{{ asset('uploads/annonces/partenaire.JPG') }}" alt="Ernest TCHOULOM" class="photo_show1" />
+														</div>
+									
+												</div> <!-- / .carousel-inner -->
+											</div> <!-- / #myCarousel_show -->
+										
+										</span>
+									</div>
+								</div>
+							</div>
+								
+						</div>
+						<div class="span2" style="background-color: #191970;"></div>
+					</div>
+				<!--</div>-->
+			</footer>
+				
+			<!-- End Footer -->
+		
+	</body>
+   {% endblock %}
+</html>
+{% endblock fos_user_content %}
